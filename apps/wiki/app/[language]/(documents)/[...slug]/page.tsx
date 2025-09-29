@@ -20,7 +20,7 @@ import {
   getDocsNavigationMap,
 } from '@/service/directory-service';
 import { getFileLastModifiedTime } from '@/service/path-utils';
-import { ChevronLeft, ChevronRight, Edit } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Edit, Undo2 } from 'lucide-react';
 import { type MDXComponents, MDXRemote } from 'next-mdx-remote-client/rsc';
 import { getFrontmatter } from 'next-mdx-remote-client/utils';
 import type { DetailedHTMLProps, ImgHTMLAttributes } from 'react';
@@ -29,6 +29,7 @@ import remarkHeadingId from 'remark-heading-id';
 import remarkMath from 'remark-math';
 import RedirectClient from '../components/RedirectClient';
 import SingleChildRedirect from '../components/SingleChildRedirect';
+import rehypeFootnoteIcon from './rehypeFootnoteIcon';
 import remarkCsvToTable from './remarkCsvToTable';
 import remarkHtmlContent from './remarkHtmlContent';
 import { remarkHugoShortcode } from './remarkHugoShortcode';
@@ -358,6 +359,7 @@ export default async function DocPage({
     h4: (props) => <ControlledElement tagName="h4" {...props} />,
     h5: (props) => <ControlledElement tagName="h5" {...props} />,
     h6: (props) => <ControlledElement tagName="h6" {...props} />,
+    Undo2: (props) => <Undo2 {...props} />,
   };
 
   const ErrorContent = ({ error }: { error: Error }) => {
@@ -444,6 +446,7 @@ export default async function DocPage({
             options={{
               mdxOptions: {
                 remarkPlugins: remarkPlugins,
+                rehypePlugins: [rehypeFootnoteIcon],
                 remarkRehypeOptions: {
                   footnoteLabel: t('footnoteLabel', language),
                   footnoteLabelProperties: {},
